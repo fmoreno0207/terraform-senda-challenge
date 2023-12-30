@@ -8,8 +8,8 @@ terraform {
   }
 
   backend "s3" {
-    bucket         = "senda-dev-tf-state-bucket"          
-    dynamodb_table = "senda-dev-tf-state-dynamo-db-table" 
+    bucket         = "senda-stg-tf-state-bucket"          
+    dynamodb_table = "senda-stg-tf-state-dynamo-db-table" 
     key            = "terraform.tfstate"
     region         = "us-east-1" 
     encrypt        = true

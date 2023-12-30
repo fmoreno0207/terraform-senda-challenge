@@ -1,2 +1,2 @@
 project = "senda" 
-environment_name  = "dev"
+environment_name  = "stg"

@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "terraform_state" {
-    bucket = "${var.environment_name}-tf-state-bucket"
+    bucket = "${var.project}-${var.environment_name}-tf-state-bucket"
     force_destroy = true
     versioning {
         enabled = true

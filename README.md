@@ -1,3 +1,3 @@
 ## Terraform AWS Auto Scaling + ALB + backed (bucket s3 y dynamodb table)
 
-/elb-tutorial-architecture-diagram (1).png
+/elb-tutorial-architecture-diagram

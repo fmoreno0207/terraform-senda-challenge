@@ -1,4 +1,4 @@
-## Terraform AWS Auto Scaling + ALB
+## Terraform AWS Auto Scaling + ALB + Remote state
 ## Descripcion
 
 Esta arquitectura contiene un grupo de escalado automático con un balanceador de carga de aplicaciones (ALB) para distribuir la carga entre las instancias. 

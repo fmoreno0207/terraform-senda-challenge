@@ -5,7 +5,7 @@ Esta arquitectura contiene un grupo de escalado automático con un balanceador d
 
 El grupo de escalado automático considera tres subnets públicas ubicadas en diferentes zonas de disponibilidad. Al ingresar la dirección DNS del ALB en un navegador, se puede verificar la distribución de carga entre las instancias mediante la visualización del ngnx que se instala durante el proceso de deploy.
 
-La arquitectura, implementada en tres Zonas de Disponibilidad, consta de un Internet Gateway, tres subnets públicas, un grupo de escalado automático y un balanceador de carga de aplicaciones.
+La arquitectura, implementada en tres Zonas de Disponibilidad, consta de un Internet Gateway, tres subnets públicas, un grupo de escalado automático, un balanceador de carga de aplicaciones y CloudWatch para monitoreo y escalado automatico de CPU.
 ```
 1 Internet Gateway
 1 Tabla de rute
@@ -13,6 +13,7 @@ La arquitectura, implementada en tres Zonas de Disponibilidad, consta de un Inte
 3 Subnets publicas
 1 Auto Scaling Group
 1 Application Load Balancer
+1 CloudWatch para uso CPU
 ```
 Adicionalmente para emplear el uso de modulos se utilizo los siguientes modulos:
 - EC2

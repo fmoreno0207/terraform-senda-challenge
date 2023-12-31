@@ -76,11 +76,12 @@ Ejecute los siguientes comandos:
 ```
 1.  cd dev-TF-state-bakend
 2. terraform init
-3. cd ..
-4. cd dev
-5. terraform init
-6. terraform plan
-7. terraform apply -auto-approve
+3. terraform apply -auto-approve
+4. cd ..
+5. cd dev
+6. terraform init
+7. terraform plan
+8. terraform apply -auto-approve
 ```
 Para eliminar la infraestructura, ejecutamos el comando terraform destroy en el directorio donde esta la infra. 
 
@@ -91,5 +92,4 @@ Estos dos recursos deben ser eliminados manualmente desde la consola aws.
 Ejecute
 ```
 1.  cd dev
-2. terraform destroy -auto-approve
-```
+2. te

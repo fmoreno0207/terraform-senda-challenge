@@ -261,6 +261,26 @@ resource "aws_autoscaling_policy" "asg-policy" {
 }
 
 #########################################################
+#CloudWatch
+resource "aws_cloudwatch_metric_alarm" "cpu_alarm" {
+  alarm_name          = "${var.project}-${var.environment_name}-CPUUtilizationAlarm"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = 1
+  metric_name         = "${var.project}-${var.environment_name}-CPUUtilization"
+  namespace           = "AWS/EC2"
+  period              = 300
+  statistic           = "Average"
+  threshold           = 10
+  alarm_description   = "Scale up when CPU usage is greater than or equal to 80% for 2 consecutive periods."
+
+  dimensions = {
+    AutoScalingGroupName = aws_autoscaling_group.asg.name
+  }
+
+  alarm_actions = [aws_autoscaling_policy.asg-policy.arn]
+}
+
+#########################################################
 # EC2 from module
 
 module "ec2_instance" {

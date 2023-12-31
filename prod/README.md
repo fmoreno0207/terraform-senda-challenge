@@ -14,7 +14,7 @@ La arquitectura, implementada en tres Zonas de Disponibilidad, consta de un Inte
 1 Auto Scaling Group
 1 Application Load Balancer
 1 CloudWatch para uso CPU
-``
+```
 Adicionalmente para emplear el uso de modulos se utilizo los siguientes modulos:
 - EC2
 - S3
@@ -74,10 +74,10 @@ Esta infra estructura esta dividida en dev, stg y prod, como ejemplo tomamos el 
 ```
 Ejecute los siguientes comandos:
 ```
-1. cd prod-TF-state-bakend
+1.  cd dev-TF-state-bakend
 2. terraform init
 3. cd ..
-4. cd prod
+4. cd dev
 5. terraform init
 6. terraform plan
 7. terraform apply -auto-approve
@@ -90,6 +90,6 @@ Estos dos recursos deben ser eliminados manualmente desde la consola aws.
 
 Ejecute
 ```
-1.  cd prod
+1.  cd dev
 2. terraform destroy -auto-approve
 ```

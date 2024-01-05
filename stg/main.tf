@@ -281,72 +281,47 @@ resource "aws_cloudwatch_metric_alarm" "cpu_alarm" {
 }
 
 #########################################################
-# EC2 from module
+# vpc from module
+module "networking" {
+  source               = "../modules/networking" # Ruta al directorio que contiene los archivos del módulo
+  region = "us-east-1"
+  vpc_name = "VPC-Fer-stg"
+  subnet_public_name = "Subnet Publica"
+  subnet_puvate_name = "Subnet Privada"
+  vpc_cidr             = "10.0.0.0/16"
+  public_subnet_cidr   = "10.0.100.0/24"
+  private_subnet_cidr  = "10.0.3.0/24"
+#  sg_name = "security autoscaling"
+#  security_group_name = "acces autosacaling"
+  vpc_id = module.networking.vpc_id
 
-module "ec2_instance" {
-  source  = "terraform-aws-modules/ec2-instance/aws"
-
-  #for_each = toset(["1", "2", "3"])
-  #name = "${var.project}-${var.environment_name}-instance-${each.key}"
-  
-  name = "${var.project}-${var.environment_name}-ec2-from-module${count.index}"
-  
-  count                  = 1
-  instance_type          = "t2.micro"
-  key_name               = aws_key_pair.ssh-keys.key_name
-  monitoring             = true
-  vpc_security_group_ids = [aws_security_group.sg1.id]
-  subnet_id              = "${aws_subnet.pub-subnets[count.index].id}"
-
-  tags = {
-    Terraform   = "true"
-    Environment = "${var.environment_name}"
-  }
 }
-
-resource "aws_key_pair" "ssh-keys" {
-  key_name   = "${var.project}-${var.environment_name}-ssh-keys"
-  public_key = file("./custom/id_rsa.pub")
-}
-
 
 #########################################################
 # S3 from module
-
-module "s3_bucket" {
-  source = "terraform-aws-modules/s3-bucket/aws"
-
-  bucket = "${var.project}${var.environment_name}-s3"
-  acl    = "private"
-
-  control_object_ownership = true
-  object_ownership         = "ObjectWriter"
-
-  versioning = {
-    enabled = true
-  }
+module "buckets" {
+  source       = "../modules/buckets"
+  region       = "us-east-1" # Puedes cambiar esto según tu región preferida
+  bucket_name   = "bucket-stg31" # Puedes cambiar esto según el nombre que desees
 }
-
 
 #########################################################
-# vpc from module
-module "vpc" {
-  source = "terraform-aws-modules/vpc/aws"
+#ec2
 
-  name = "${var.project}-${var.environment_name}-vpc-from-module"
-  cidr = "10.0.0.0/16"
+module "instances" {
+  source    = "../modules/instances" # Ruta al directorio que contiene los archivos del módulo
+  vpc_id    = module.networking.vpc_id
+  subnet_id = module.networking.public_subnet_id
+  ec2_name = "ec2-stg-test"
 
-  azs             = ["us-east-1a", "us-east-1b", "us-east-1c"]
-  private_subnets = ["10.0.10.0/24", "10.0.20.0/24", "10.0.30.0/24"]
-  public_subnets  = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
-
-  enable_nat_gateway = true
-  enable_vpn_gateway = true
-
-  tags = {
-    Terraform = "true"
-    Environment = "${var.environment_name}"
-
-  }
-  
 }
+
+#########################################################
+#dynamodb
+module "dynamodb_example" {
+  source        = "../modules/dynamodb"
+  region = "us-east-1"
+  table_name    = "stg-tabla-dynamodb"
+  read_capacity = 20
+  write_capacity = 20
+}  
